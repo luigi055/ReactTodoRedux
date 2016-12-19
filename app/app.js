@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Router, IndexRoute, hashHistory } from 'react-router';
+import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
 
 // App styles
-require('style!css!sass!./styles/styles.scss');
+import 'style!css!sass!./styles/styles.scss';
 
 ReactDOM.render(
-  <p>Boilerplate React Project</p>,
+  <TodoApp />,
   document.getElementById('app')
 );
