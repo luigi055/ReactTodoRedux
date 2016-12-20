@@ -5,10 +5,14 @@ class Todo extends Component {
     super(props);
   }
   render() {
-    const { id, text } = this.props; //this was passed as a all the properties of a todo with the spread operator
+    //this was passed as a all the properties of a todo with the spread operator
+    const { id, text, completed } = this.props; 
+    //use defaultChecked since the checkbox will be mutable by an external function.
+    // Using Checked="" will throw us an error when try to mutate
     return (
-      <div>
-        {id}. {text}
+      <div onClick={() => this.props.onToggle(id)} >
+        <input type="checkbox" defaultChecked={completed} /> 
+        {text}
       </div>
     );
   }
