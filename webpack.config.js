@@ -24,8 +24,10 @@ module.exports = {
   resolve: {
     root: __dirname,
     modulesDirectories: [
+    //with this we don't have t specify aliases everytime we create a new component
       'node_modules',
-      './app/components' //with this we don't have t specify aliases everytime we create a new component
+      './app/components', 
+      './app/api'
     ],
     alias: {},
     extensions: ['', '.js', '.jsx']
