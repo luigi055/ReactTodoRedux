@@ -41,7 +41,7 @@ describe('TodoApi', () => {
     it('should return todos if valid array in localStorage', () => {
       const todos = [{
         id: 23,
-        test: 'test all files',
+        text: 'test all files',
         completed: false
       }];
       localStorage.setItem('todos', JSON.stringify(todos));
@@ -49,5 +49,47 @@ describe('TodoApi', () => {
       const actualTodos = TodoApi.getTodos();
       expect(actualTodos).toEqual(todos);
     });
+  });
+
+  describe('filterTodo', () => {
+    const todos = [{
+      id: 1,
+      text: 'Some text here',
+      completed: true
+    }, {
+      id: 2,
+      text: 'Other text here',
+      completed: false
+    }, {
+      id: 3,
+      text: 'Some text here',
+      completed: true
+    }]
+    it('should return all items if showCompleted is true', () => {
+      const filterTodos = TodoApi.filterTodos(todos, true, '');
+
+      expect(filterTodos.length).toBe(3);
+    });
+    it('should return just false items if showCompleted is false', () => {
+      const filterTodos = TodoApi.filterTodos(todos, false, '');
+
+      expect(filterTodos.length).toBe(1);
+    });
+    it('should sort by completed status', () => {
+      const filterTodos = TodoApi.filterTodos(todos, true, '');
+
+      expect(filterTodos[0].completed).toBe(false);
+    });
+    it('should filter todos by searchText', () => {
+      const filterTodos = TodoApi.filterTodos(todos, true, 'some');
+
+      expect(filterTodos.length).toBe(2);
+    });
+    it('should return all todos if searchText is empty', () => {
+      const filterTodos = TodoApi.filterTodos(todos, true, '');
+
+      expect(filterTodos.length).toBe(3);
+    });
+
   });
 });
