@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
+import moment from 'moment';
 
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
@@ -52,7 +53,9 @@ class TodoApp extends Component {
         {
           id: uuid(), //we're using node-uuid to warant an very unique id
           text,
-          completed: false
+          completed: false,
+          createdAt: moment().unix(),
+          completedAt: null
         }
       ]
     });
@@ -62,6 +65,7 @@ class TodoApp extends Component {
     const updatedTodos = this.state.todos.map(todo => {
       if (todo.id === id) {
         todo.completed = !todo.completed; //will set to the opposite of the value
+        todo.completedAt = todo.completed ? moment().unix() : undefined;
       }
       return todo;
     });

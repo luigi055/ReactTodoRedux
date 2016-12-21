@@ -17,13 +17,17 @@ describe('TodoApp', () => {
     todoApp.handleAddTodo(todoText); //adding any value
 
     expect(todoApp.state.todos[0].text).toBe(todoText);
+    // Expect createdAt to be a number
+    expect(todoApp.state.todos[0].createdAt).toBeA('number');
   });
 
   it('should toggle completed value when handleToggle called', () => {
     const todoData = {
       id: 11,
       text: 'test features',
-      completed: false
+      completed: false,
+      createdAt: 0,
+      completedAt: null
     };
     const todoApp = TestUtils.renderIntoDocument(<TodoApp />);
     todoApp.setState({ todos: [todoData] });
@@ -36,6 +40,33 @@ describe('TodoApp', () => {
     // Verify that value changed
     expect(todoApp.state.todos[0].completed).toBe(true);
 
+    // Expect completedAt to be a number
+    expect(todoApp.state.todos[0].completedAt).toBeA('number');
+
+    todoApp.handleToggle(11);
+    expect(todoApp.state.todos[0].completed).toBe(false);
 
   });
+  it('should toggle todo from completed to incompleted', () => {
+    const todoData = {
+      id: 11,
+      text: 'test features',
+      completed: true,
+      createdAt: 0,
+      completedAt: 123
+    };
+    const todoApp = TestUtils.renderIntoDocument(<TodoApp />);
+    todoApp.setState({ todos: [todoData] });
+
+    expect(todoApp.state.todos[0].completed).toBe(true);
+    todoApp.handleToggle(11);
+    expect(todoApp.state.todos[0].completed).toBe(false);
+
+    // Test that when toggle from true to false, completedAt get remove
+    // SOME WAYS TO MAKE THIS TEST
+    expect(todoApp.state.todos[0].completedAt).toNotExist();
+    // expect(todoApp.state.todos[0].completedAt).toBeA('undefined');
+    // expect(typeof todoApp.state.todos[0].completedAt).toBe('undefined');
+  });
+
 });
