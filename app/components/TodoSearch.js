@@ -15,7 +15,7 @@ class TodoSearch extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container__header">
         <div>
           <input type="search" placeholder="Search todos" ref="searchText" onChange={this.handleSearch} />
         </div>

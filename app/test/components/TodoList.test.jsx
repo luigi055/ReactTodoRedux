@@ -25,4 +25,13 @@ describe('TodoList', () => {
 
     expect(todosComponents.length).toBe(todos.length); //since there's just 2 todos todosComponents should render 2 Todo component
   });
+  
+  it('should render empty message if no todos', () => {
+    const todos = [];
+
+    const todoList = TestUtils.renderIntoDocument(<TodoList todos={todos} />);
+    const $el = $(ReactDOM.findDOMNode(todoList));
+
+    expect($el.find('.container__message').length).toBe(1);
+  });
 });
