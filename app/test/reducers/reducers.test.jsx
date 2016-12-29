@@ -4,7 +4,7 @@ import df from 'deep-freeze-strict';
 import { 
   searchTextReducer, 
   todosReducer,
-  toggleShowCompletedReducer } from 'reducers';
+  showCompletedReducer } from 'reducers';
 
 describe('Reducers', () => {
   describe('searchTextReducer', () => {
@@ -55,13 +55,13 @@ describe('Reducers', () => {
   });
 
 
-  describe('toggleShowCompletedReducer', () => {
+  describe('showCompletedReducer', () => {
     it('should toggle showCompleted to true ', () => {
       const action = {
         type: 'TOGGLE_SHOW_COMPLETED',
       };
 
-      const res = toggleShowCompletedReducer(df({ showCompleted: false }), action);
+      const res = showCompletedReducer(df({ showCompleted: false }), action);
       expect(res).toEqual(true);
     });
 
@@ -70,7 +70,7 @@ describe('Reducers', () => {
         type: 'TOGGLE_SHOW_COMPLETED',
       };
 
-      const res = toggleShowCompletedReducer(df({ showCompleted: true }), df(action));
+      const res = showCompletedReducer(df({ showCompleted: true }), df(action));
       expect(res).toEqual(false);
     });
   });

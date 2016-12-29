@@ -40,16 +40,7 @@ export const todosReducer = (state = [], action) => {
   }
 };
 
-export const toggleTodoReducer = (state = '', action) => {
-  switch (action.type) {
-    case 'TOGGLE_TODO':
-      return action.id;
-    default:
-      return state;
-  }
-};
-
-export const toggleShowCompletedReducer = (state = { showCompleted: false }, action) => {
+export const showCompletedReducer = (state = { showCompleted: false }, action) => {
   switch (action.type) {
     case 'TOGGLE_SHOW_COMPLETED':
       return !state.showCompleted;
