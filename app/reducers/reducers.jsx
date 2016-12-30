@@ -36,7 +36,11 @@ export const todosReducer = (state = [], action) => {
           return todo; //return the unmodified version
         }
       });
-
+    case 'ADD_TODOS':
+      return [
+        ...state,
+        ...action.todos
+      ];
     default:
       return state;
   }

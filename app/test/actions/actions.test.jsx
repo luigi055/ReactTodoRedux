@@ -1,5 +1,5 @@
 import expect from 'expect';
-import { setSearchText, addTodo, toggleTodo, toggleShowCompleted } from 'actions';
+import { setSearchText, addTodo, addTodos, toggleTodo, toggleShowCompleted } from 'actions';
 
 describe('actions', () => {
   it('should generate search text action', () => {
@@ -20,6 +20,24 @@ describe('actions', () => {
 
     const res = addTodo(action.text);
     expect(res).toEqual(action);
+  });
+  it('should generate add todos action object', () => {
+    const todos = [{
+      id: '111',
+      text: 'anything',
+      completed: false,
+      completedAt: null,
+      createdAt: 33000
+    }];
+
+    const action = {
+      type: 'ADD_TODOS',
+      todos
+    };
+
+    const res = addTodos(todos);
+    expect(res).toEqual(action);
+
   });
   it('should generate Toggle todo action', () => {
     const action = {

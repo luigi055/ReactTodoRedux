@@ -2,15 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Router, IndexRoute, hashHistory } from 'react-router';
-import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
+
 import * as actions from 'actions';
-// const store = require('configureStore').configure();
 import { configure } from 'configureStore';
+import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
+import TodoApi from 'TodoApi';
+
 const store = configure();
 
 store.subscribe(() => {
-  console.log('New State:', store.getState);
+  const state = store.getState();
+  console.log('New State:', state);
+  TodoApi.setTodos(state.todos);
 });
+
+const initialTodos = TodoApi.getTodos();
+store.dispatch(actions.addTodos(initialTodos));
 
 // Default todo
 // store.dispatch(actions.addTodo('Clean the Yard'));
