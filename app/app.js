@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
 import * as actions from 'actions';
@@ -18,7 +19,10 @@ store.dispatch(actions.toggleShowCompleted());
 // App styles
 import 'style!css!sass!./styles/styles.scss';
 
+// the Provider children will be access to store
 ReactDOM.render(
-  <TodoApp />,
+  <Provider store={store}>
+    <TodoApp />
+  </Provider>,
   document.getElementById('app')
 );
