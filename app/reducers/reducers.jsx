@@ -42,10 +42,10 @@ export const todosReducer = (state = [], action) => {
   }
 };
 
-export const showCompletedReducer = (state = { showCompleted: false }, action) => {
+export const showCompletedReducer = (state = false, action) => {
   switch (action.type) {
     case 'TOGGLE_SHOW_COMPLETED':
-      return !state.showCompleted;
+      return !state;
     default:
       return state; 
   }

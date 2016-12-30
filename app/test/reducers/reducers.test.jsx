@@ -61,7 +61,7 @@ describe('Reducers', () => {
         type: 'TOGGLE_SHOW_COMPLETED',
       };
 
-      const res = showCompletedReducer(df({ showCompleted: false }), action);
+      const res = showCompletedReducer(df(false), action);
       expect(res).toEqual(true);
     });
 
@@ -70,7 +70,7 @@ describe('Reducers', () => {
         type: 'TOGGLE_SHOW_COMPLETED',
       };
 
-      const res = showCompletedReducer(df({ showCompleted: true }), df(action));
+      const res = showCompletedReducer(df(true), df(action));
       expect(res).toEqual(false);
     });
   });

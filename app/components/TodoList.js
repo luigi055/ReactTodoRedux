@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Todo from 'Todo';
+import TodoApi from 'TodoApi'
 
 export class TodoList extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { todos } = this.props;
+    const { todos, showCompleted, searchText } = this.props;
     const renderTodos = () => {
       if (todos.length === 0) {
         return <p className="container__message">Nothing To Do</p>;
       }
-      return todos.map(todo => {
+      return TodoApi.filterTodos(todos, showCompleted, searchText).map(todo => {
         return (
           <Todo key={todo.id} {...todo} />
         );
@@ -27,9 +28,7 @@ export class TodoList extends Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    todos: state.todos
-  };
+  return state
 }
 // Connect this component with the store
 // Inject todos
