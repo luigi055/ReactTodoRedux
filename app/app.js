@@ -12,19 +12,7 @@ import TodoApi from 'TodoApi';
 
 const store = configure();
 
-store.subscribe(() => {
-  const state = store.getState();
-  console.log('New State:', state);
-  TodoApi.setTodos(state.todos);
-});
-
-const initialTodos = TodoApi.getTodos();
-store.dispatch(actions.addTodos(initialTodos));
-
-// Default todo
-// store.dispatch(actions.addTodo('Clean the Yard'));
-// store.dispatch(actions.setSearchText('Yard'));
-// store.dispatch(actions.toggleShowCompleted());
+store.dispatch(actions.startAddTodo());
 
 // App styles
 import 'style!css!sass!./styles/styles.scss';
