@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { toggleTodo } from 'actions';
+import { startToggleTodo } from 'actions';
 
 export class Todo extends Component {
   constructor(props) {
@@ -26,7 +26,10 @@ export class Todo extends Component {
     //use defaultChecked since the checkbox will be mutable by an external function.
     // Using Checked="" will throw us an error when try to mutate
     return (
-      <div className={todoClassName} onClick={() => dispatch(toggleTodo(id))} >
+      <div className={todoClassName} onClick={() => {
+        dispatch(startToggleTodo(id, !completed))
+        }
+      } >
         <div>
           <input type="checkbox" defaultChecked={completed} /> 
         </div>
