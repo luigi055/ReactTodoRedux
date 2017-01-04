@@ -30,6 +30,7 @@ module.exports = {
       './app/api'
     ],
     alias: {
+      app: 'app',
       actions: 'app/actions/actions.jsx',
       reducers: 'app/reducers/reducers.jsx',
       configureStore: 'app/store/configureStore.jsx'

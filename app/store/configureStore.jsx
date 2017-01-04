@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { 
   searchTextReducer, 
@@ -12,11 +12,12 @@ export const configure = (initialState = {}) => {
     todos: todosReducer
   });
 
-  const store = createStore(reducer,
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(
+    reducer,
     initialState, 
-    window.__REDUX_DEVTOOLS_EXTENSION__ && 
-    window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk));
+    composeEnhancers(applyMiddleware(thunk))
+  );
   
   return store;
 };

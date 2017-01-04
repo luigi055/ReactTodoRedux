@@ -8,6 +8,8 @@ import { configure } from 'configureStore';
 import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
 import TodoApi from 'TodoApi';
 
+// import '../playground/firebase';
+
 const store = configure();
 
 store.subscribe(() => {
