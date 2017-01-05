@@ -12,7 +12,7 @@ import TodoApi from 'TodoApi';
 
 const store = configure();
 
-store.dispatch(actions.startAddTodo());
+store.dispatch(actions.startAddTodos());
 
 // App styles
 import 'style!css!sass!./styles/styles.scss';
