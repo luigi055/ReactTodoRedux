@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuid from 'uuid';
 import moment from 'moment';
 
 import TodoList from 'TodoList';
