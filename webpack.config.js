@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 
+//use NODE_ENV=production webpack      for create a lighter bundle or NODE_ENV=production webpack for a deep lighter bundle
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 module.exports = {
   entry: [
   //will use script! style! and css! to execute our loaders and transform to bundle and script! means it will produce those frameworks without bundle them
@@ -15,7 +18,12 @@ module.exports = {
     new webpack.ProvidePlugin({
       '$': 'jquery', // Assigning the $ and jQuery to jquery when bundle
       'jQuery': 'jquery'
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    }) // for optimize the NODE_ENV=production webpack -p and avoid warning (this plugin comes with webpack)
   ],
   output: {
     path: __dirname + '/public', // it can also be './public'
@@ -60,6 +68,6 @@ module.exports = {
   },
   //this creates source maps of our components that the browser will understand
   //for debugging in browser
-  devtool: 'cheap-module-eval-source-map' 
+  devtool: process.env.NODE_ENV === 'production' ? undefined : 'cheap-module-eval-source-map' 
 };
 
