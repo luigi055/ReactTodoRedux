@@ -1,8 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
+const envFile = require('node-env-file');
 
 //use NODE_ENV=production webpack      for create a lighter bundle or NODE_ENV=production webpack for a deep lighter bundle
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+try {
+  envFile(path.join(__dirname, 'config/' + process.env.NODE_ENV + '.env'));
+} catch (e) {
+
+}
 
 module.exports = {
   entry: [
@@ -23,7 +30,17 @@ module.exports = {
       compressor: {
         warnings: false
       }
-    }) // for optimize the NODE_ENV=production webpack -p and avoid warning (this plugin comes with webpack)
+    }), // for optimize the NODE_ENV=production webpack -p and avoid warning (this plugin comes with webpack)
+     new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        API_KEY: JSON.stringify(process.env.API_KEY),
+        AUTH_DOMAIN: JSON.stringify(process.env.AUTH_DOMAIN),
+        DATABASE_URL: JSON.stringify(process.env.DATABASE_URL),
+        STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET),
+        MESSAGING_SENDER_ID: JSON.stringify(process.env.MESSAGING_SENDER_ID)
+      }
+    })
   ],
   output: {
     path: __dirname + '/public', // it can also be './public'
