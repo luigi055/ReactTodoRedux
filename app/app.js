@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Route, Router, IndexRoute, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 
 import * as actions from 'actions';
 import { configure } from 'configureStore';
-import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
-import TodoApi from 'TodoApi';
-import Login from './components/Login';
+import firebase from 'app/firebase/';
+import router from 'app/router';
+// everytime the state of the authentication changes
+//when user logs in the app will redirect him to todos section
+// and when there's not users logged in it will sent to root
+firebase.auth().onAuthStateChanged(user => {
+  if(user) {
+    hashHistory.push('/todos');
+  } else {
+    hashHistory.push('/');
+  }
+});
 
 // import '../playground/firebase';
 
@@ -18,15 +27,12 @@ store.dispatch(actions.startAddTodos());
 // App styles
 import 'style!css!sass!./styles/styles.scss';
 
+
+
 // the Provider children will be access to store
 ReactDOM.render(
   <Provider store={store}>  
-    <Router history={hashHistory}>
-      <Route path="/">
-        <IndexRoute component={Login} />
-        <Route path="todos" component={TodoApp} />
-      </Route>
-    </Router>
+    {router}
   </Provider>,
   document.getElementById('app')
 );
