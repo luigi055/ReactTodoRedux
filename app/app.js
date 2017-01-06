@@ -7,6 +7,7 @@ import * as actions from 'actions';
 import { configure } from 'configureStore';
 import TodoApp from 'TodoApp'; //specified the entire component folder as alias in webpack.config.js
 import TodoApi from 'TodoApi';
+import Login from './components/Login';
 
 // import '../playground/firebase';
 
@@ -19,8 +20,13 @@ import 'style!css!sass!./styles/styles.scss';
 
 // the Provider children will be access to store
 ReactDOM.render(
-  <Provider store={store}>
-    <TodoApp />
+  <Provider store={store}>  
+    <Router history={hashHistory}>
+      <Route path="/">
+        <IndexRoute component={Login} />
+        <Route path="todos" component={TodoApp} />
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById('app')
 );
