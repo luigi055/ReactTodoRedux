@@ -2,7 +2,16 @@ import expect from 'expect';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import firebase, {firebaseRef} from 'app/firebase';
-import { startToggleTodo, startAddTodo, startAddTodos, setSearchText, addTodo, addTodos, updateTodo, toggleShowCompleted } from 'actions';
+import { startToggleTodo, 
+         startAddTodo,
+         startAddTodos,
+         setSearchText,
+         addTodo, 
+         addTodos, 
+         updateTodo, 
+         toggleShowCompleted,
+         login,
+         logout } from 'actions';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -78,6 +87,26 @@ describe('actions', () => {
     const res = updateTodo(action.id, action.updates);
     expect(res).toEqual(action);
   });
+
+  it('should generate login action object', () => {
+    const action = {
+      type: 'LOGIN',
+      uid: '123abc'
+    };
+
+    const res = login(action.uid);
+    expect(res).toEqual(action);
+  });
+  it('should generate logout action object', () => {
+    const action = {
+      type: 'LOGOUT'
+    };
+
+    const res = logout(action.uid);
+    expect(res).toEqual(action);
+  });
+
+  
   it('should generate Toggle show Completed action', () => {
     const action = {
       type: 'TOGGLE_SHOW_COMPLETED',

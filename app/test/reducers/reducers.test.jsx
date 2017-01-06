@@ -4,7 +4,8 @@ import df from 'deep-freeze-strict';
 import { 
   searchTextReducer, 
   todosReducer,
-  showCompletedReducer } from 'reducers';
+  showCompletedReducer,
+  authReducer } from 'reducers';
 
 describe('Reducers', () => {
   describe('searchTextReducer', () => {
@@ -105,4 +106,32 @@ describe('Reducers', () => {
       expect(res).toEqual(false);
     });
   });
+
+  describe('authReducer', () =>{
+    it('should store uid on login', () => {
+      const action = {
+        type: 'LOGIN',
+        uid: '123abc'
+      };
+
+      const res = authReducer(undefined, df(action));
+      expect(res).toEqual({
+        uid: action.uid
+      });
+    });
+
+    it('should store uid on logout', () => {
+      const authData = {
+        uid: '123abc'
+      };
+
+      const action = {
+        type: 'LOGOUT'
+      };
+
+      const res = authReducer(df(authData), df(action));
+      expect(res).toEqual({});
+    });
+  });
 });
+
