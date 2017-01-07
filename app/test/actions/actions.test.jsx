@@ -58,22 +58,6 @@ describe('actions', () => {
     expect(res).toEqual(action);
 
   });
-
-// asynch tests. this test contact with the firebase
-  it('should create todo and dispatch ADD_TODO', done => {
-    const store = createMockStore({});
-    const todoText = 'My Todo Item';
-    store.dispatch(startAddTodo(todoText)).then(() => {
-      const actions = store.getActions();
-      expect(actions[0]).toInclude({
-        type: 'ADD_TODO'
-      });
-      expect(actions[0].todo).toInclude({
-        text: todoText
-      });
-      done();
-    }).catch(done);
-  });
   
   it('should generate update todo action', () => {
     const action = {
@@ -118,29 +102,36 @@ describe('actions', () => {
 
   describe('Test with firebase todos', () => {
     let testTodoRef;
+    let uid;
+    let todosRef;
 
-    beforeEach(done => {
-      const todosRef = firebaseRef.child('todos');
+    beforeEach((done) => {
+      // in order to use signInAnonymously method
+      // anonymous authentication must be activated in firebase console
+      firebase.auth().signInAnonymously().then((user) => {
+        uid = user.uid;
+        todosRef = firebaseRef.child(`users/${uid}/todos`);
 
-      todosRef.remove().then(() => {
-        testTodoRef = firebaseRef.child('todos').push();
+        return todosRef.remove();
+      }).then(() => {
+        testTodoRef = todosRef.push();
+
         return testTodoRef.set({
           text: 'Something to do',
           completed: false,
-          createdAt: 32623623,
+          createdAt: 23453453
         })
       })
       .then(() => done())
       .catch(done);
-
     }); //beforeEach from mocha.js
 
     afterEach(done => {
-      testTodoRef.remove().then(() => done());
+      todosRef.remove().then(() => done());
     }); //afterEach from mocha.js
 
     it('should toggle todo and dispatch todo action', done => {
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid}});
       const action = startToggleTodo(testTodoRef.key, true);
 
       store.dispatch(action).then(() => {
@@ -160,7 +151,7 @@ describe('actions', () => {
     });
 
     it('should populate todos and dispatch ADD_TODOS', done => {
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid}});
       const action = startAddTodos();
 
       store.dispatch(action).then(() => {
@@ -171,6 +162,22 @@ describe('actions', () => {
 
         done();
       }, done);
+    });
+
+    // asynch tests. this test contact with the firebase
+    it('should create todo and dispatch ADD_TODO', done => {
+      const store = createMockStore({auth: {uid}});
+      const todoText = 'My Todo Item';
+      store.dispatch(startAddTodo(todoText)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toInclude({
+          type: 'ADD_TODO'
+        });
+        expect(actions[0].todo).toInclude({
+          text: todoText
+        });
+        done();
+      }).catch(done);
     });
   });
 });
