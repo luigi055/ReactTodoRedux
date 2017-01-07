@@ -47,6 +47,11 @@ describe('TodoApi', () => {
 
       expect(filterTodos.length).toBe(2);
     });
+    it('should filter todos by searchText if upper case', () => {
+      const filterTodos = TodoApi.filterTodos(todos, true, 'Some');
+
+      expect(filterTodos.length).toBe(2);
+    });
     it('should return all todos if searchText is empty', () => {
       const filterTodos = TodoApi.filterTodos(todos, true, '');
 
