@@ -108,6 +108,7 @@ describe('actions', () => {
     beforeEach((done) => {
       // in order to use signInAnonymously method
       // anonymous authentication must be activated in firebase console
+      // just for test database
       firebase.auth().signInAnonymously().then((user) => {
         uid = user.uid;
         todosRef = firebaseRef.child(`users/${uid}/todos`);
